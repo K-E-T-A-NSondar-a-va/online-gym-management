@@ -46,6 +46,10 @@ th {
         	color: white;
         	font-size: 28px;
    }
+   
+   a {
+   	color: white;
+   }
 </style>
 
 </head>
@@ -61,6 +65,7 @@ th {
                             <th>Slot Number</th>
                             <th>Slot time</th>
                             <th>Slot Price</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -69,6 +74,7 @@ th {
 							<td>${slot.slotId}</td>
 							<td>${slot.slotTime}</td>
 							<td>${slot.pricing}</td>
+							<td><a href="/slot-show/${slot.slotId}">Slot Enquire</a></td>
 						</tr>
 					</c:forEach>
                     </tbody>

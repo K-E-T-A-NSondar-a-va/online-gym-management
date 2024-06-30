@@ -15,7 +15,6 @@ public class GymItem {
 
 	public GymItem() {
 		super();
-
 	}
 
 	public GymItem(Long itemId, String itemName, Integer totalSeat) {

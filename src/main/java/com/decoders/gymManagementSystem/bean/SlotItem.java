@@ -22,6 +22,11 @@ public class SlotItem {
 		this.embeddedId = embeddedId;
 		this.seatBooked = seatBooked;
 	}
+	
+	public SlotItem(SlotItemEmbed embeddedId) {
+		this.seatBooked = 0;
+		this.embeddedId = embeddedId;
+	}
 
 	public SlotItemEmbed getEmbeddedId() {
 		return embeddedId;

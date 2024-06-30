@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -16,8 +17,12 @@ import org.springframework.web.servlet.ModelAndView;
 import com.decoders.gymManagementSystem.bean.GymItem;
 import com.decoders.gymManagementSystem.bean.Slot;
 import com.decoders.gymManagementSystem.bean.SlotItem;
+import com.decoders.gymManagementSystem.bean.SlotItemEmbed;
 import com.decoders.gymManagementSystem.dao.GymItemDao;
 import com.decoders.gymManagementSystem.dao.SlotDaoImpl;
+import com.decoders.gymManagementSystem.dao.SlotItemDaoImpl;
+import com.decoders.gymManagementSystem.dao.SlotItemRepository;
+import com.decoders.gymManagementSystem.dao.SlotRepository;
 import com.decoders.gymManagementSystem.service.GymUserService;
 
 @RestController
@@ -31,6 +36,12 @@ public class GymController {
 	
 	@Autowired
 	private GymUserService gymUserService;
+	
+	@Autowired
+	private SlotItemDaoImpl slotItemDaoImpl;
+	
+	@Autowired
+	private SlotItemRepository slotItemRepository;
 	
 	private final org.slf4j.Logger logger = LoggerFactory.getLogger(GymController.class);
 	
@@ -79,6 +90,15 @@ public class GymController {
 	@PostMapping("/slot")
 	public ModelAndView saveSlot(@ModelAttribute("slotRecord") Slot slot) {
 		slotDaoImpl.saveNewSLot(slot);
+		
+		List<GymItem> itemList = gymItemDao.displayAllItem();
+		
+		for(GymItem item : itemList) {
+			SlotItemEmbed embeddedId = new SlotItemEmbed(slot.getSlotId(), item.getItemId());
+			SlotItem slotItem = new SlotItem(embeddedId);
+			slotItemDaoImpl.saveSlotItem(slotItem);
+		}
+		
 		return new ModelAndView("controlPanel");
 	}
 	
@@ -91,9 +111,31 @@ public class GymController {
 		return mv;
 	}
 	
-	@GetMapping("/book-slot")
+	@GetMapping("/slot-show/{slotId}")
+	public ModelAndView showSlotBookingInteface(@PathVariable("slotId") Long slotId) {
+		Slot slot = slotDaoImpl.findSlotById(slotId);
+		List<GymItem> itemList = gymItemDao.displayAllItem();
+		ModelAndView mv = new ModelAndView("slotBookingInterface");
+		
+		SlotItem slotItem = new SlotItem();
+		
+		mv.addObject("slotItemRecord", slotItem);
+		mv.addObject("slotItemList",slotItemRepository.getAllSlotItemBySlotId(slotId));
+		mv.addObject("GymItemList", itemList);
+		mv.addObject("slot", slot);
+		
+		return mv;
+	}
+	
+	@GetMapping("/slot-booking")
 	public ModelAndView showSeatBookingPage() {
 		return new ModelAndView("slotBooking");
+	}
+	
+	@PostMapping("/book-slot")
+	public ModelAndView bookTheSlot(@ModelAttribute("slotItemRecord") SlotItem slotItem) {
+		slotItemDaoImpl.bookSlot(slotItem);
+		return new ModelAndView("controlPanel");
 	}
 	
 	@GetMapping("/get-name")

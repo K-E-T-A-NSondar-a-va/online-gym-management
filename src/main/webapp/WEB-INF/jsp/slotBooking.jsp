@@ -66,6 +66,11 @@
         .gym-item:hover {
             border: solid 1px #28a745;
         }
+        
+        a {
+	   	text-decoration: underline;
+	   	color: white;
+	   }
 
 </style>
 
@@ -76,24 +81,27 @@
 	  <!-- Slot Booking Interface -->
         <div class="container">
             <h2 class="form-title">Book Your Gym Slot</h2>
-            <form action="/bookSlot" method="post">
+            
+            <a href="slots">Click Here to Book Your Slot</a>
+            
+          <!--   <form action="/bookSlot" method="post">
                 <div class="form-group">
                     <label for="gymItem">Select Gym Item:</label>
                     <div class="gym-item-container">
                         <div class="gym-item" data-value="cardio">
-                            <!-- <img src="https://via.placeholder.com/50" alt="Cardio"> -->
+                            <img src="https://via.placeholder.com/50" alt="Cardio">
                             <span>Cardio</span>
                         </div>
                         <div class="gym-item" data-value="body_building">
-                            <!-- <img src="https://via.placeholder.com/50" alt="Body Building"> -->
+                            <img src="https://via.placeholder.com/50" alt="Body Building">
                             <span>Body Building</span>
                         </div>
                         <div class="gym-item" data-value="yoga">
-                            <!-- <img src="https://via.placeholder.com/50" alt="Yoga"> -->
+                            <img src="https://via.placeholder.com/50" alt="Yoga">
                             <span>Yoga</span>
                         </div>
                         <div class="gym-item" data-value="boxing">
-                            <!-- <img src="https://via.placeholder.com/50" alt="Boxing"> -->
+                            <img src="https://via.placeholder.com/50" alt="Boxing">
                             <span>Boxing</span>
                         </div>
                     </div>
@@ -122,7 +130,7 @@
                 <div class="form-group">
                     <button type="submit">Book Slot</button>
                 </div>
-            </form>
+            </form> -->
         </div>
 </body>
 </html>
