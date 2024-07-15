@@ -72,6 +72,7 @@ th {
 							<td>${item.itemId}</td>
 							<td>${item.itemName}</td>
 							<td>${item.totalSeat}</td>
+							<td><a href="/slot-item-add/${item.itemId}">Add To Slots</a></td>
 						</tr>
 					</c:forEach>
 				</tbody>

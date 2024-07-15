@@ -18,8 +18,10 @@ public class GymItemDaoImpl implements GymItemDao {
 	
 	@Override
 	public void saveNewItem(GymItem gymItem) {
-		Long newId = generateItemId();
-		gymItem.setItemId(newId);
+		if(gymItem.getItemId() == null) {
+			Long newId = generateItemId();
+			gymItem.setItemId(newId);
+		}
 		repository.save(gymItem);
 	}
 

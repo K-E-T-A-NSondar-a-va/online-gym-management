@@ -55,7 +55,7 @@ th {
 </head>
 <body>
 <jsp:include page="controlPanel.jsp" />
-  <!-- Available Slots  -->
+
         <div class="container">
             <h2 class="form-title">Available Slots</h2>
             <div style="display: flex; align-items: center; justify-content: center;">

@@ -164,7 +164,7 @@ body, html {
 				modelAttribute="userRecord">
 				Select User type:
 				<form:select path="type" id="userType">
-					<option value="MEMBER">Member</option>
+					<option value="CUSTOMER">Customer</option>
 					<option value="ADMIN">Admin</option>
 				</form:select>
 				<form:input path="firstName" type="text" name="firstName"

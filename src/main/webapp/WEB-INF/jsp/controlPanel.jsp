@@ -239,7 +239,7 @@
         
         const getFullName = async () => {
         	const response = await fetch("http://localhost:8345/get-name");
-        	
+        	 
         	console.log(response.json)
         	const name = await response.text();
         	
@@ -282,12 +282,14 @@
             <a href="/add-slot" onclick="setActive(this)" class="tab">Add New Slot</a>
             <a href="/slots" onclick="setActive(this)" class="tab">Slot Report</a>
         </div>
-        <div style="display: flex; flex-direction: column; gap: 5px;">
+        <!-- <div style="display: flex; flex-direction: column; gap: 5px;">
             <span>Other actions:</span>
             <a href="/slot-booking" onclick="setActive(this)" class="tab">Slot Booking</a>
             <a href="/logout"><div class="tab">Logout</div></a>
-        </div>
+        </div> -->
+    </div>                        
     </div>
-    </div>
+    
+    <a href="/logout">Click Here to Logout</a>
 </body>
 </html>

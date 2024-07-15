@@ -64,7 +64,7 @@ a {
 </style>
 </head>
 <body>
-	<jsp:include page="controlPanel.jsp" />
+	<%-- <jsp:include page="controlPanel.jsp" /> --%>
 
 	<div class="container">
 		<h2 class="form-title">Book Your Gym Slot</h2>
@@ -74,8 +74,10 @@ a {
 			&#8377;</h4>
 
 		<h3 style="color: #28a745">Select Gym Service:</h3>
-		<form:form action="/book-slot" method="post" modelAttribute="slotItemRecord">
-			<form:hidden path="embeddedId.slotId" value="${slot.slotId}"/>
+		<form:form action="/book-slot" method="post"
+			modelAttribute="slotItemEmbedRecord">
+			
+			<form:hidden value="${slot.slotId}" path="slotId" />
 			<div
 				style="display: flex; align-items: center; justify-content: center;">
 				<table>
@@ -87,19 +89,24 @@ a {
 							<th>Available Seats</th>
 						</tr>
 					</thead>
+					
 					<tbody>
-						<c:forEach items="${GymItemList}" var="gymItem">
-							<tr>					
-								<td><input type="radio" name="selectItem"
-									value="${gymItem.itemId}" path="embeddedId.itemId" /></td>
-								<td>${gymItem.itemName}</td>
-								<td>${gymItem.totalSeat}</td>
-								<td><c:forEach items="${slotItemList}" var="slotItem">
+						<c:forEach items="${itemList}" var="item">
+							<tr>
+								<td>
+								<form:radiobutton path="itemId" value="${item.itemId}" label="${item.itemId}"/>
+								<%-- <label for="selectItem">id: ${item.itemId}</label> <form:input
+										type="radio" name="selectItem" value="id: ${item.itemId}"
+										path="${embeddedId.itemId}" /> --%></td>
+								<td>${item.itemName}</td>
+								<td>${item.totalSeat}</td>
+								<td>
+									<%-- <c:forEach items="${slotItemList}" var="slotItem">
 										<c:if test="${gymItem.itemId == slotItem.embeddedId.itemId}">
 										${gymItem.totalSeat - slotItem.seatBooked}
 									</c:if>
-									
-									</c:forEach></td>
+									</c:forEach> --%> ${item.seatVacant}
+								</td>
 							</tr>
 						</c:forEach>
 					</tbody>
