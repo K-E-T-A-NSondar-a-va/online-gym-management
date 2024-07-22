@@ -10,10 +10,15 @@
 <meta charset="ISO-8859-1">
 <title>Book Your Slot</title>
 
+<link rel="stylesheet" href="/CSS/tableStyle.css">
+
 <style>
+* {
+	font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
 .container {
 	/* background-color: rgba(0, 0, 0, 0.7); */
-	background: linear-gradient(to left, #434343, #000000);
 	padding: 20px;
 	border-radius: 10px;
 	width: 70%;
@@ -22,7 +27,7 @@
 	position: relative;
 	top: 60px;
 	border: solid 1px #313131;
-	color: white;
+	width: 55%;
 }
 
 button {
@@ -30,7 +35,7 @@ button {
 	padding: 15px;
 	border: none;
 	border-radius: 5px;
-	background-color: #28a745;
+	background-color: #4156f3;
 	color: white;
 	font-size: 16px;
 	cursor: pointer;
@@ -38,46 +43,24 @@ button {
 	margin-top: 15px;
 }
 
-table {
-	width: 70%;
-	border-collapse: collapse;
-	margin-top: 20px;
-	color: white;
-}
-
-table, th, td {
-	border: 1px solid white;
-}
-
-th, td {
-	padding: 10px;
-	text-align: left;
-}
-
-th {
-	background-color: #333;
-}
-
-a {
-	color: white;
-}
 </style>
 </head>
 <body>
-	<%-- <jsp:include page="controlPanel.jsp" /> --%>
-
+	<jsp:include page="NavbarCustomer.jsp" />
+	<br>
+	<br>
 	<div class="container">
-		<h2 class="form-title">Book Your Gym Slot</h2>
-		<h3 style="text-decoration: underline">Slot Details:</h3>
-		<h4 style="font-weight: light">Slot Timing: ${slot.slotTime}</h4>
+		<h2 class="form-title">Book Your Gym Slot</h2> <br>
+		<h4 style="font-weight: light">Slot Timing: ${slot.slotTime}</h4> <br>
 		<h4 style="font-weight: light">Slot Price: ${slot.pricing}
-			&#8377;</h4>
+			&#8377;</h4> <br>
 
-		<h3 style="color: #28a745">Select Gym Service:</h3>
-		<form:form action="/book-slot" method="post"
-			modelAttribute="slotItemEmbedRecord">
+		<h3 style="color: #4156f3">Select Gym Service:</h3> <br>
+		<form:form action="/book-slot" method="post">
 			
-			<form:hidden value="${slot.slotId}" path="slotId" />
+			<input type="hidden" value="${slot.slotId}" name="slotId" />
+			<input type="hidden" value="0" name="username" />
+			
 			<div
 				style="display: flex; align-items: center; justify-content: center;">
 				<table>
@@ -94,7 +77,7 @@ a {
 						<c:forEach items="${itemList}" var="item">
 							<tr>
 								<td>
-								<form:radiobutton path="itemId" value="${item.itemId}" label="${item.itemId}"/>
+								<input type="radio"  name="itemId" value="${item.itemId}" label="${item.itemId}"/>
 								<%-- <label for="selectItem">id: ${item.itemId}</label> <form:input
 										type="radio" name="selectItem" value="id: ${item.itemId}"
 										path="${embeddedId.itemId}" /> --%></td>

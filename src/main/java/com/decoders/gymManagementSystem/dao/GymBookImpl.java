@@ -17,6 +17,9 @@ public class GymBookImpl implements GymBookDao {
 
 	@Override
 	public void save(GymBook gymBook) {
+		if(gymBook.getBookingId() == null)
+			gymBook.setBookingId(generateBookingId());
+		
 		repository.save(gymBook);
 	}
 
@@ -45,6 +48,11 @@ public class GymBookImpl implements GymBookDao {
 	@Override
 	public void deleteById(Long id) {
 		repository.deleteById(id);
+	}
+
+	@Override
+	public boolean isBookingExists(Long slotId, Long itemId, String username) {
+		return repository.isBookingExists(slotId, itemId, username) != null;
 	}
 
 }

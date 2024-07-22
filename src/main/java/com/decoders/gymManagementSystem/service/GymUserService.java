@@ -1,6 +1,7 @@
 package com.decoders.gymManagementSystem.service;
 
 import java.security.Principal;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +18,8 @@ public class GymUserService implements UserDetailsService {
 	
 	@Autowired
 	private GymUserRepository gymUserRepository;
-	
 	private String type;
+	private GymUser gymUser;
 	
 	public void save(GymUser gymUser) {
 		gymUserRepository.save(gymUser);
@@ -33,7 +34,16 @@ public class GymUserService implements UserDetailsService {
 		// TODO Auto-generated method stub
 		GymUser user = gymUserRepository.findById(username).get();
 		type = user.getType();
+		this.gymUser = user;
 		return user;
+	}
+	
+	public GymUser getUser() {
+		return gymUser;
+	}
+	
+	public List<String> getAllCustomerUsers() {
+		return gymUserRepository.findAllCustomerUsers();
 	}
 	
 	public boolean isUsernameExists(String username) {

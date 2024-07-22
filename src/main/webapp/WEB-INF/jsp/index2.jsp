@@ -5,13 +5,14 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" href="/CSS/tableStyle.css">
+
 <style>
 .container {
 	/* background-color: rgba(0, 0, 0, 0.7); */
-	background: linear-gradient(to left, #434343, #000000);
 	padding: 20px;
 	border-radius: 10px;
-	width: 70%;
+	width: 55%;
 	margin: auto;
 	margin-top: 10px;
 	position: relative;
@@ -19,64 +20,12 @@
 	border: solid 1px #313131;
 }
 
-table {
-	width: 70%;
-	border-collapse: collapse;
-	margin-top: 20px;
-	color: white;
-}
-
-table, th, td {
-	border: 1px solid white;
-}
-
-th, td {
-	padding: 10px;
-	text-align: left;
-}
-
-th {
-	background-color: #333;
-}
-
-.form-title {
-	color: white;
-	font-size: 28px;
-}
-
-a {
-	color: white;
-}
-
 .welcome-message {
-	font-size: 30px;
-	margin-bottom: 60px;
+	font-size: 18px;
+	margin-top: 35px;
+	margin-bottom: 15px;
 	text-align: center;
-}
-
-.form-group {
-	margin: 20px 0;
-}
-
-.form-group input, .form-group select, .form-group button {
-	width: 40%;
-	padding: 10px;
-	font-size: 16px;
-	border-radius: 5px;
-	border: none;
-	margin-top: 10px;
-}
-
-.form-group button {
-	background-color: #28a745;
-	color: white;
-	cursor: pointer;
-	transition: background-color 0.3s;
-	width: fit-content;
-}
-
-.form-group button:hover {
-	background-color: #218838;
+	font-weight: light;
 }
 
 h2 {
@@ -98,6 +47,9 @@ h2 {
 <title>Gym Customer</title>
 </head>
 <body>
+
+	<jsp:include page="NavbarCustomer.jsp" />
+	
 	<div class="welcome-message">
 		Welcome <span id="name"></span> to the DecodersGym. Hurry up! book
 		your gym slot
@@ -130,6 +82,6 @@ h2 {
 		</div>
 	</div>
 	
-	<a href="/logout">Click Here to Logout</a>
+	<%-- <jsp:include page="Footer.jsp" /> --%>
 </body>
 </html>

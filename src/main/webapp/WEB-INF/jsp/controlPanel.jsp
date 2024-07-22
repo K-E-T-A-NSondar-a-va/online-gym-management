@@ -9,8 +9,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gym Control Center</title>
-    <style>
+    <title>Gym Admin Panel</title>
+    <link rel="stylesheet" href="/CSS/adminPanelStyle.css">
+    
+    <!-- <style>
         body, html {
         	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             height: 100%;
@@ -86,16 +88,16 @@
 
         select {
             padding: 0 5px;
-        }
-        /* .center {
+        } -->
+        <!-- /* .center {
             display: flex;
             align-items: center;
         } */
 
 
 
-        /* navbar code:  */
-        .navbar {
+        /* navbar code:  */ -->
+       <!--  .navbar {
             display: flex;
             justify-content: space-between;
             width: 100%;
@@ -214,7 +216,7 @@
        	#name {
        		fo
        	}
-    </style>
+    </style> -->
     
      <script>
         function setActive(element) {
@@ -252,18 +254,18 @@
 
 </head>
 <body>
-    <div class="navbar">
+ <!--    <div class="navbar">
         <h1>DecodersGym</h1>
         <ul>
             <li><a href="/">Home</a></li>
-            <!-- <li class="dropdown">
+            <li class="dropdown">
                 <a href="/pricing">Pricing</a>
                 <div class="dropdown-content">
                     <a href="#">Basic Plan</a>
                     <a href="#">Premium Plan</a>
                     <a href="#">VIP Plan</a>
                 </div>
-            </li> -->
+            </li>
             <li><a href="/contact">Contact</a></li>
             <li><a href="/feedback">Feedback</a></li>
         </ul>
@@ -274,22 +276,21 @@
     <div class="tab-bar">
         <div style="display: flex; flex-direction: column; gap: 5px;">
             <span>Manage Gym Item:</span>
-            <a href="/gymitem" onclick="setActive(this)" class="tab">Add New Gym Item</a>
+            <a href="/gymitem" onclick="setActive(this)" class="tab">Add Gym Item</a>
             <a href="/gymitems" onclick="setActive(this)" class="tab">Gym Item Report</a>
         </div>
         <div style="display: flex; flex-direction: column; gap: 5px;">
             <span>Manage Slots:</span>
-            <a href="/add-slot" onclick="setActive(this)" class="tab">Add New Slot</a>
+            <a href="/add-slot" onclick="setActive(this)" class="tab">Add Slot</a>
             <a href="/slots" onclick="setActive(this)" class="tab">Slot Report</a>
         </div>
-        <!-- <div style="display: flex; flex-direction: column; gap: 5px;">
+        <div style="display: flex; flex-direction: column; gap: 5px;">
             <span>Other actions:</span>
-            <a href="/slot-booking" onclick="setActive(this)" class="tab">Slot Booking</a>
+            <a href="/bookings" onclick="setActive(this)" class="tab">Show Bookings</a>
             <a href="/logout"><div class="tab">Logout</div></a>
-        </div> -->
+        </div>
     </div>                        
-    </div>
-    
-    <a href="/logout">Click Here to Logout</a>
+    </div> -->
+    <jsp:include page="adminPanelContent.jsp" />
 </body>
 </html>

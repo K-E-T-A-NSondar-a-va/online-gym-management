@@ -10,4 +10,5 @@ public interface GymBookDao {
 	public List<GymBook> getBookList();
 	public GymBook findBookInfoById(Long id);	
 	public void deleteById(Long id);
+	public boolean isBookingExists(Long slotId, Long itemId, String username);
 }

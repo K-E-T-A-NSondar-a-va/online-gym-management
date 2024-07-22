@@ -1,136 +1,130 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+	pageEncoding="ISO-8859-1"%>
+
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Book Slot</title>
+<title>Book Your Slot</title>
 
-<style>
+<link rel="stylesheet" href="/CSS/tableStyle.css">
+<link rel="stylesheet" href="/CSS/adminPanelStyle.css">
 
-		.container {
-            /* background-color: rgba(0, 0, 0, 0.7); */
-            background: linear-gradient(to left, #434343, #000000);
-            padding: 20px;
-            border-radius: 10px;
-            width: 70%;
-            margin: auto;
-            margin-top: 10px;
-            position: relative;
-            top: 60px;
-            border: solid 1px #313131;
-            color: white;
-        }
-        
-             .form-group {
-            margin: 20px 0;
-        }
-        .form-group input, .form-group select, .form-group button {
-            width: 40%;
-            padding: 10px;
-            font-size: 16px;
-            border-radius: 5px;
-            border: none;
-            margin-top: 10px;
-        }
-        .form-group button {
-            background-color: #28a745;
-            color: white;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            width: fit-content;
-        }
-        .form-group button:hover {
-            background-color: #218838;
-        }
-         .form-title {
-        	color: white;
-        	font-size: 28px;
-        }
-        .gym-item-container {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 10px;
-        }
-        .gym-item {
-            background: #2f2f2f;
-            color: white;
-            padding: 4px 16px;
-            border-radius: 5px;
-            font-size: large;
-            cursor: pointer;
-            border: solid 1px #2f2f2f;
-        }
+<!-- <style>
+.container {
+	/* background-color: rgba(0, 0, 0, 0.7); */
+	background: linear-gradient(to left, #434343, #000000);
+	padding: 20px;
+	border-radius: 10px;
+	width: 70%;
+	margin: auto;
+	margin-top: 10px;
+	position: relative;
+	top: 60px;
+	border: solid 1px #313131;
+	color: white;
+}
 
-        .gym-item:hover {
-            border: solid 1px #28a745;
-        }
-        
-        a {
-	   	text-decoration: underline;
-	   	color: white;
-	   }
+button {
+	width: 100%;
+	padding: 15px;
+	border: none;
+	border-radius: 5px;
+	background-color: #28a745;
+	color: white;
+	font-size: 16px;
+	cursor: pointer;
+	width: fit-content;
+	margin-top: 15px;
+}
 
-</style>
+table {
+	width: 70%;
+	border-collapse: collapse;
+	margin-top: 20px;
+	color: white;
+}
 
+table, th, td {
+	border: 1px solid white;
+}
+
+th, td {
+	padding: 10px;
+	text-align: left;
+}
+
+th {
+	background-color: #333;
+}
+
+a {
+	color: white;
+}
+</style> -->
 </head>
 <body>
+	<div class="container">
+		<jsp:include page="adminPanel.jsp" />
+		<div class="content">
+			<div class="form-container">
+				<h2 class="form-title">Book Gym Slot for Customer</h2>
+				<h4 style="font-weight: light;">Slot Timing: <span style="color: #4156f3;">${slot.slotTime}</span></h4>
+				<h4 style="font-weight: light;">Slot Price: <span style="color: #4156f3;">${slot.pricing} &#8377;</span></h4>
 
-	<jsp:include page="controlPanel.jsp" />
-	  <!-- Slot Booking Interface -->
-        <div class="container">
-            <h2 class="form-title">Book Your Gym Slot</h2>
-            
-            <a href="slots">Click Here to Book Your Slot</a>
-            
-          <!--   <form action="/bookSlot" method="post">
-                <div class="form-group">
-                    <label for="gymItem">Select Gym Item:</label>
-                    <div class="gym-item-container">
-                        <div class="gym-item" data-value="cardio">
-                            <img src="https://via.placeholder.com/50" alt="Cardio">
-                            <span>Cardio</span>
-                        </div>
-                        <div class="gym-item" data-value="body_building">
-                            <img src="https://via.placeholder.com/50" alt="Body Building">
-                            <span>Body Building</span>
-                        </div>
-                        <div class="gym-item" data-value="yoga">
-                            <img src="https://via.placeholder.com/50" alt="Yoga">
-                            <span>Yoga</span>
-                        </div>
-                        <div class="gym-item" data-value="boxing">
-                            <img src="https://via.placeholder.com/50" alt="Boxing">
-                            <span>Boxing</span>
-                        </div>
-                    </div>
-                    <input type="hidden" id="gymItem" name="gymItem" class="hidden-input" required>
-                </div>
-                <div class="form-group">
-                    <label for="slot">Select Slot:</label>
-                    <select id="slot" name="slot" required>
-                        <optgroup label="Morning">
-                            <option value="6_30_7_30">6:30 AM (1500 &#8377;)</option>
-                            <option value="7_30_8_30">7:30 AM (2000 &#8377;)</option>
-                            <option value="8_30_9_30">8:30 AM (2000 &#8377;)</option>
-                        </optgroup>
-                        <optgroup label="Afternoon">
-                            <option value="12_00_1_00">12:00 PM (1500 &#8377;)</option>
-                            <option value="1_00_2_00">1:00 PM (2000 &#8377;)</option>
-                            <option value="2_00_3_00">2:00 PM (1500 &#8377;)</option>
-                        </optgroup>
-                        <optgroup label="Evening">
-                            <option value="5_00_6_00">5:00 PM (1700 &#8377;)</option>
-                            <option value="6_00_7_00">6:00 PM (1800 &#8377;)</option>
-                            <option value="7_00_8_00">7:00 PM (2000 &#8377;)</option>
-                        </optgroup>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <button type="submit">Book Slot</button>
-                </div>
-            </form> -->
-        </div>
+				
+				<form:form action="/book-slot" method="post">
+
+					<input type="hidden" value="${slot.slotId}" name="slotId" />
+				Select Customer:
+				<select class="form-select" name="username" id="userType">
+						<c:forEach items="${customerList}" var="customerName">
+							<option value="${customerName}">${customerName}</option>
+						</c:forEach>
+					</select>
+					<br>
+					<h5>Select Gym Service:</h5>
+					<div
+						style="display: flex; align-items: center; justify-content: center;">
+						<table>
+							<thead>
+								<tr>
+									<th>Select</th>
+									<th>Gym Service</th>
+									<th>Total Seats</th>
+									<th>Available Seats</th>
+								</tr>
+							</thead>
+
+							<tbody>
+								<c:forEach items="${itemList}" var="item">
+									<tr>
+										<td><input type="radio" name="itemId"
+											value="${item.itemId}" label="${item.itemId}" /> <%-- <label for="selectItem">id: ${item.itemId}</label> <form:input
+										type="radio" name="selectItem" value= "id: ${item.itemId}"
+										path="${embeddedId.itemId}" /> --%></td>
+										<td>${item.itemName}</td>
+										<td>${item.totalSeat}</td>
+										<td>
+											<%-- <c:forEach items="${slotItemList}" var="slotItem">
+										<c:if test="${gymItem.itemId == slotItem.embeddedId.itemId}">
+										${gymItem.totalSeat - slotItem.seatBooked}
+									</c:if>
+									</c:forEach> --%> ${item.seatVacant}
+										</td>
+									</tr>
+								</c:forEach>
+							</tbody>
+						</table>
+					</div>
+
+					<button class="form-button" type="submit">Book</button>
+				</form:form>
+			</div>
+		</div>
+	</div>
 </body>
 </html>
