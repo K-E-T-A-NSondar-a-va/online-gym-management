@@ -11,4 +11,7 @@ public interface GymBookRepository extends JpaRepository<GymBook, Long> {
 	
 	@Query("select bookingId from GymBook where slotId = ?1 and itemId = ?2 and username = ?3")
 	public Long isBookingExists(Long slotId, Long itemId, String username);
+	
+	@Query("select count(bookingId) from GymBook where username = ?1")
+	public int findTotalSeatBookedByUsername(String username);
 }

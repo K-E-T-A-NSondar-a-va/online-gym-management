@@ -55,4 +55,15 @@ public class GymBookImpl implements GymBookDao {
 		return repository.isBookingExists(slotId, itemId, username) != null;
 	}
 
+	@Override
+	public int findTotalSeatbookedByUsername(String username) {
+		int seatBooked = repository.findTotalSeatBookedByUsername(username);
+		return seatBooked > 0 ? seatBooked : 0;
+	}
+
+	@Override
+	public void deleteAllById(List<Long> bookinIdList) {
+		repository.deleteAllById(bookinIdList);
+	}
+
 }

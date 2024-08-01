@@ -11,4 +11,6 @@ public interface GymBookDao {
 	public GymBook findBookInfoById(Long id);	
 	public void deleteById(Long id);
 	public boolean isBookingExists(Long slotId, Long itemId, String username);
+	public int findTotalSeatbookedByUsername(String username);
+	public void deleteAllById(List<Long> bookinIdList);
 }

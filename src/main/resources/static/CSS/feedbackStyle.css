@@ -1,0 +1,66 @@
+@charset "ISO-8859-1";
+
+.center-container {
+	display: flex;
+	justify-content: center;
+}
+
+.feedback-container {
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	padding: 15px;
+	max-height: 600px;
+	overflow-y: auto;
+	display: flex;
+	/* align-items: center; */
+	flex-direction: column;
+	width: fit-content;
+	gap: 15px;
+	background-color: white;
+}
+
+i:nth-child(even) {
+	color: black;
+}
+
+button {
+	outline: none;
+	border: none;
+	background: transparent;
+	cursor: pointer;
+	width: fit-content;
+}
+
+.feedback {
+	width: 600px;
+	padding: 10px;
+	border-radius: 5px;
+}
+
+#name {
+    font-size: 17px;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+}
+
+.feedback-user {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.feedback-content {
+	font-size: 15px;
+	margin: 10px 0;
+}
+
+.feedback:nth-child(odd) {
+	background: linear-gradient(to left, #f573b4, #ff469f);
+	color: white;
+}
+
+.feedback:nth-child(even) {
+	background: linear-gradient(to right, #a5d8f3, #1c92d2);
+}

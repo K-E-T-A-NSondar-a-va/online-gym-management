@@ -93,6 +93,7 @@ a {
 							<thead>
 								<tr>
 									<th>Select</th>
+									<th>Item ID</th>
 									<th>Gym Service</th>
 									<th>Total Seats</th>
 									<th>Available Seats</th>
@@ -106,6 +107,7 @@ a {
 											value="${item.itemId}" label="${item.itemId}" /> <%-- <label for="selectItem">id: ${item.itemId}</label> <form:input
 										type="radio" name="selectItem" value= "id: ${item.itemId}"
 										path="${embeddedId.itemId}" /> --%></td>
+										<td>${item.itemId}</td>
 										<td>${item.itemName}</td>
 										<td>${item.totalSeat}</td>
 										<td>

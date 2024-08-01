@@ -85,6 +85,14 @@
 				<div class="item">
 					<i class="fa fa-close"></i><span>Cancellation</span>
 				</div>
+			</a> <a href="/feedbacks" class="element" onclick="setActive(this)">
+				<div class="item">
+					<i class="fa fa-id-card-o"></i><span>Feedbacks</span>
+				</div>
+			</a> <a href="/customers" class="element" onclick="setActive(this)">
+				<div class="item">
+					<i class="fa fa-user-circle-o"></i><span>Customers</span>
+				</div>
 			</a> <a href="/logout" class="element" onclick="setActive(this)">
 				<div class="item">
 					<i class="fa fa-sign-out"></i><span>Logout</span>

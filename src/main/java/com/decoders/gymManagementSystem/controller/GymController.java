@@ -7,6 +7,7 @@ import org.apache.logging.log4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.decoders.gymManagementSystem.bean.Feedback;
 import com.decoders.gymManagementSystem.bean.GymBook;
 import com.decoders.gymManagementSystem.bean.GymItem;
 import com.decoders.gymManagementSystem.bean.GymUser;
@@ -22,8 +24,10 @@ import com.decoders.gymManagementSystem.bean.Item;
 import com.decoders.gymManagementSystem.bean.Slot;
 import com.decoders.gymManagementSystem.bean.SlotItem;
 import com.decoders.gymManagementSystem.bean.SlotItemEmbed;
+import com.decoders.gymManagementSystem.dao.FeedbackDao;
 import com.decoders.gymManagementSystem.dao.GymBookDao;
 import com.decoders.gymManagementSystem.dao.GymItemDao;
+import com.decoders.gymManagementSystem.dao.GymUserRepository;
 import com.decoders.gymManagementSystem.dao.SlotDao;
 import com.decoders.gymManagementSystem.dao.SlotDaoImpl;
 import com.decoders.gymManagementSystem.dao.SlotItemDao;
@@ -61,6 +65,12 @@ public class GymController {
 	
 	@Autowired
 	private GymBookDao gymBookDao;
+	
+	@Autowired
+	private FeedbackDao feedbackDao;
+	
+	@Autowired
+	private GymUserRepository gymUserRepository;
 	
 	
 	
@@ -209,7 +219,10 @@ public class GymController {
 		 }
 		 
 		 gymBookDao.save(gymBook);
-		 return new ModelAndView("redirect:index");
+		 
+		 ModelAndView mv = new ModelAndView("confirmPage");
+		 mv.addObject("msg", "congratulations ! your slot has beed booked !!");
+		 return mv;
 	 }
 	 
 	 
@@ -287,6 +300,102 @@ public class GymController {
 		}
 		
 		return new ModelAndView("redirect:bookings");
+	}
+	
+	@GetMapping("/feedback")
+	public ModelAndView showFeedbackForm() {
+		return new ModelAndView("feedbackEntryPage");
+	}
+	
+	@PostMapping("/feedback")
+	public ModelAndView processFeedback(@RequestParam("content") String content) {
+		Feedback feedback = new Feedback();
+		GymUser gymUser = gymUserService.getUser();
+		
+		feedback.setUserId(gymUser.getUsername());
+		feedback.setFullName(gymUser.getFirstName()+" "+gymUser.getLastName());
+		feedback.setContent(content);
+		
+		feedbackDao.saveFeedback(feedback);
+		ModelAndView mv = new ModelAndView("confirmPage");
+		mv.addObject("msg", "Thank you for your valueable feedback !");
+		return mv;
+	}
+	
+	@GetMapping("/feedbacks")
+	public ModelAndView showAllFeedbacks() {
+		
+		if(!gymUserService.getType().equalsIgnoreCase("Admin")) 
+			throw new AccessDeniedException("User not allowed");
+		
+		ModelAndView mv = new ModelAndView("feedbackList");
+		List<Feedback> feedbacks = feedbackDao.getFeedbackList();
+		mv.addObject("feedbacks",feedbacks);
+		
+		return mv;
+	}
+	
+	@PostMapping("/delete-feedback")
+	public ModelAndView deleteFeedback(@RequestParam("feedbackId") Long feedbackId) {
+		if(!gymUserService.getType().equalsIgnoreCase("Admin")) 
+			throw new AccessDeniedException("User not allowed");
+		
+		feedbackDao.deleteFeedBackById(feedbackId);
+		return new ModelAndView("redirect:/feedbacks");
+	}
+	
+	@GetMapping("/customers")
+	public ModelAndView showCustomerList() {
+		if(!gymUserService.getType().equalsIgnoreCase("Admin")) 
+			throw new AccessDeniedException("User not allowed");
+		
+		ModelAndView mv = new ModelAndView("customerDetails");
+		List<GymUser> customerList = gymUserService.getAllCustomerUsers().stream().map(
+										username -> gymUserRepository.findById(username).get()
+									).toList();
+		mv.addObject("customerList", customerList);
+		mv.addObject("gymBookDao", gymBookDao);
+		return mv;
+	}
+	
+	@PostMapping("/delete-customer")
+	public ModelAndView deleteCustomerByUsername(@RequestParam("username") String username) {
+		if(!gymUserService.getType().equalsIgnoreCase("Admin")) 
+			throw new AccessDeniedException("User not allowed");
+		
+		if(gymBookDao.findTotalSeatbookedByUsername(username) > 0) {
+			List<GymBook>  userBookings = gymBookDao.getBookList().stream().filter(gymUser -> gymUser.getUsername().equals(username)).toList();
+			List<SlotItem> slotItems = userBookings.stream().map(booking -> slotItemDao.getSlotItemById(new SlotItemEmbed(booking.getSlotId(), booking.getItemId()))).toList();
+			slotItems.forEach(slotItem -> {
+				slotItem.setSeatBooked(slotItem.getSeatBooked() - 1);
+				slotItemDao.saveSlotItem(slotItem);
+			});
+			
+			List<Long> bookinIds = userBookings.stream().map(booking -> booking.getBookingId()).toList();
+			gymBookDao.deleteAllById(bookinIds);
+		}
+		gymUserRepository.deleteById(username);
+		
+		return new ModelAndView("redirect:customers");
+	}
+	
+	@GetMapping("/edit-gymItem")
+	public ModelAndView editGymItem(@RequestParam("itemId") Long itemId) {
+		ModelAndView mv = new ModelAndView("editGymItemForm");
+		GymItem gymItem = gymItemDao.findItemById(itemId);
+		mv.addObject("gymItem", gymItem);
+		return mv;
+	}
+	
+	@PostMapping("/edit-gymItem")
+	public ModelAndView processEditing(@RequestParam("itemId") Long itemId, @RequestParam("itemName") String itemName, @RequestParam("totalSeat") int totalSeat) {
+		GymItem gymItem = gymItemDao.findItemById(itemId);
+		gymItem.setItemName(itemName);
+		gymItem.setTotalSeat(totalSeat);
+		gymItemDao.saveNewItem(gymItem);
+		ModelAndView mv = new ModelAndView("confirmPage");
+		mv.addObject("msg","Gym Item Updated successfully !");
+		return mv;
 	}
 
 }
